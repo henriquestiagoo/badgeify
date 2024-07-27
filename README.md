@@ -1,6 +1,6 @@
 # Badgeify
 
-This is the final sample project of the post [Using SwiftUI in Command Line Tools](https://SwiftToolkit.dev/swiftui-meets-command-line), at SwiftToolkit.dev.
+This is the final sample project that results on following the posts [Using SwiftUI in Command Line Tools](https://SwiftToolkit.dev/swiftui-meets-command-line) and [Building Swift Executables](https://swifttoolkit.dev/posts/building-swift-executables), from SwiftToolkit.dev.
 
 The example app icon used in this project is from the NetNewsWire app.
 
@@ -35,7 +35,7 @@ swift build -c release [--product <product-name>]
 
 ## A Script to Build and Store the Binary
 
-With the commands and flags from the previous section, it is possible to write a short script that will build the binary and place it under /usr/bin, so it can be accessed from any directory:
+With the commands and flags from the previous section, it is possible to write a short script that will build the binary and place it under `/usr/bin`, so it can be accessed from any directory:
 
 ```sh
 #!/bin/sh
@@ -45,7 +45,7 @@ BINARY_PATH=$(swift build -c release --show-bin-path)
 cp "${BINARY_PATH}/<product-name>" /usr/local/bin
 ```
 
-As this last operation requires admin privileges, make sure to prepend running the script with sudo. You can save this script as create-binary.sh, and run it with:
+As this last operation requires admin privileges, make sure to prepend running the script with `sudo`. You can save this script as `create-binary.sh`, and run it with:
 
 ```sh
 sudo ./create-binary.sh
@@ -61,7 +61,7 @@ In many cases, you will want to ship your tool ready to be used, and to do so, y
 ### Intel and Apple Silicon Support
 
 When building on an Apple Silicon machine, the resulting executable will by default no be able to be ran on Intel Macs. 
-To build for it, you can use the --triple build option. It allows describing the target architecture, vendor, and operating system - therefore, a triple.
+To build for it, you can use the `--triple` build option. It allows describing the target architecture, vendor, and operating system - therefore, a triple.
 
 ```sh
 swift build \
@@ -69,9 +69,9 @@ swift build \
     --triple x86_64-apple-macosx
 ```
 
-When the situation is inverse - if you’re on an Intel Mac and want to build for an Apple Silicon Mac - use the arm64-apple-macosx triple.
+When the situation is inverse - if you’re on an Intel Mac and want to build for an Apple Silicon Mac - use the `arm64-apple-macosx` triple.
 
-Finally, you can merge both binaries into a universal binary, supporting both architectures. To do so, use the lipo tool, which manipulates and creates universal binary files for multiple architectures:
+Finally, you can merge both binaries into a universal binary, supporting both architectures. To do so, use the `lipo` tool, which manipulates and creates universal binary files for multiple architectures:
 
 ```sh
 lipo -create \
@@ -80,7 +80,7 @@ lipo -create \
     <path-to-x86-binary>
 ```
 
-Replace <universal-output-path> with the path you want the universal binary to be saved at, and the paths for each different binary.
+Replace `<universal-output-path>` with the path you want the universal binary to be saved at, and the paths for each different binary.
 
 
 ## Linux Support
@@ -89,7 +89,7 @@ Building for Linux will require either a Linux machine or Docker.
 
 Considering you have Docker installed in your machine, this can be done with two commands.
 
-First, run the swift build command in a Docker container, using the official Swift image for Linux. Here we use 5.10, but you can use latest instead:
+First, run the `swift build` command in a Docker container, using the official Swift image for Linux. Here we use `5.10`, but you can use latest instead:
 
 ```sh
 docker run \
@@ -100,7 +100,7 @@ docker run \
     swift build -c release <product-name>
 ```
 
-Once the build has succeeded, you can use another Docker command, cp, to copy the binary from the container to the host machine:
+Once the build has succeeded, you can use another Docker command, `cp`, to copy the binary from the container to the host machine:
 
 ```sh
 docker cp \
@@ -108,7 +108,7 @@ docker cp \
     <linux-product-name>
 ```
 
-Replace <linux-product-name> with the file name you want, making it clear it’s the Linux build.
+Replace `<linux-product-name>` with the file name you want, making it clear it’s the Linux build.
 
 To confirm that this is indeed the correct binary, you can use the file tool, which determines a file type:
 
@@ -116,4 +116,4 @@ To confirm that this is indeed the correct binary, you can use the file tool, wh
 file <linux-product-name>
 ```
 
-Which results in ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, for GNU/Linux 3.7.0, with debug_info, not stripped.
+Which results in `ELF 64-bit LSB pie executable, ARM aarch64, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-aarch64.so.1, for GNU/Linux 3.7.0, with debug_info, not stripped`.
