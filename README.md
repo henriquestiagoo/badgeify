@@ -1,6 +1,6 @@
 # Badgeify
 
-This is the final sample project that results on following the posts [Using SwiftUI in Command Line Tools](https://SwiftToolkit.dev/swiftui-meets-command-line) and [Building Swift Executables](https://swifttoolkit.dev/posts/building-swift-executables), from SwiftToolkit.dev.
+This is the final sample project created by following the guides [Using SwiftUI in Command Line Tools](https://SwiftToolkit.dev/swiftui-meets-command-line) and [Building Swift Executables](https://swifttoolkit.dev/posts/building-swift-executables), from SwiftToolkit.dev.
 
 The example app icon used in this project is from the NetNewsWire app.
 
