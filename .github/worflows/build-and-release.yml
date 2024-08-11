@@ -1,0 +1,53 @@
+on:
+  release:
+    types: [published]
+
+name: Build Release Artifacts
+jobs:
+  build-macos:
+    name: Build macOS Executable
+    runs-on: macos-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build macOS binary
+        run: scripts/build-universal-macos.sh
+      - name: 'Upload macOS Build Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: badgeify-macos
+          path: builds/badgeify-macos
+
+
+  build-linux:
+    name: Build Linux Executable
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Build it
+        run: scripts/build-linux.sh
+      - name: 'Upload Linux Build Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: badgeify-linux
+          path: builds/badgeify-linux
+
+  upload:
+    name: Upload release artifacts
+    runs-on: ubuntu-latest
+    needs: [build-macos, build-linux]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: .
+      - name: List downloaded files
+        run: ls -R
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ github.event.release.name }}
+          files: ./*/*
+          fail_on_unmatched_files: true
+          
