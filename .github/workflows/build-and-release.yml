@@ -19,24 +19,25 @@ jobs:
           path: builds/badgeify-macos
 
 
-  build-linux:
-    name: Build Linux Executable
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build it
-        run: scripts/build-linux.sh
-      - name: 'Upload Linux Build Artifact'
-        uses: actions/upload-artifact@v4
-        with:
-          name: badgeify-linux
-          path: builds/badgeify-linux
+  #build-linux:
+  #  name: Build Linux Executable
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@v3
+  #    - name: Build it
+  #      run: scripts/build-linux.sh
+  #    - name: 'Upload Linux Build Artifact'
+  #      uses: actions/upload-artifact@v4
+  #      with:
+  #        name: badgeify-linux
+  #        path: builds/badgeify-linux
 
   upload:
     name: Upload release artifacts
     runs-on: ubuntu-latest
-    needs: [build-macos, build-linux]
+    #needs: [build-macos, build-linux]
+    needs: [build-macos]
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -50,4 +51,3 @@ jobs:
           tag_name: ${{ github.event.release.name }}
           files: ./*/*
           fail_on_unmatched_files: true
-          
